@@ -1,20 +1,20 @@
 {
-  "name": "mtg-server",
-  "version": "1.0.0",
-  "description": "server to save MTG decks created on mtg-app",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "shelly",
-  "license": "ISC",
-  "dependencies": {
-    "cors": "^2.8.4",
-    "express": "^4.16.3",
-    "knex": "^0.15.2",
-    "morgan": "^1.9.1",
-    "node": "^10.10.0",
-    "nodemon": "^1.18.4",
-    "pg": "^7.4.3"
-  }
+	"name": "mtg-server",
+	"version": "1.0.0",
+	"description": "server to save MTG decks created on mtg-app",
+	"main": "server.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"author": "shelly",
+	"license": "ISC",
+	"dependencies": {
+		"cors": "^2.8.4",
+		"express": "^4.16.3",
+		"knex": "^0.15.2",
+		"morgan": "^1.9.1",
+		"node": "^10.10.0",
+		"nodemon": "^1.18.4",
+		"pg": "^7.4.3"
+	}
 }
