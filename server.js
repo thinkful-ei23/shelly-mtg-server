@@ -23,6 +23,7 @@ app.use(express.json());
 
 //create route handler
 app.get('/api/cards/:uniqueUrl', function(req, res, next) {
+	console.log('backend');
 	const unique_url = req.params.uniqueUrl;
 	knex
 		.first('mtg_cards_id')
