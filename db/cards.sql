@@ -18,7 +18,7 @@ CREATE TABLE decks
 
 CREATE TABLE cards
 (
-	mtg_cards_id text NOT NULL,
+	mtg_cards text NOT NULL,
 	unique_url text NOT NULL,
 	decks_id INT NOT NULL REFERENCES decks
 );
