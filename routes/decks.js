@@ -22,6 +22,7 @@ router.get('/', function(req, res, next) {
 		})
 		.catch(err => next(err));
 });
+
 router.post('/', function(req, res, next) {
 	console.log(req.body);
 	const { mtg_cards, unique_url } = req.body;

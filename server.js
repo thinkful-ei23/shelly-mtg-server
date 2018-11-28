@@ -6,6 +6,7 @@ const knex = require('./knex');
 const { PORT, CLIENT_ORIGIN } = require('./config');
 
 const deckRouter = require('./routes/decks');
+const userRouter = require('./routes/users');
 
 // Create an Express application
 const app = express();
@@ -23,6 +24,7 @@ app.use(cors({ origin: CLIENT_ORIGIN }));
 app.use(express.json());
 
 app.use('/api/cards', deckRouter);
+app.use('/api/users', userRouter);
 
 // Custom 404 Not Found route handler
 app.use((req, res, next) => {
