@@ -10,6 +10,7 @@ const { PORT, CLIENT_ORIGIN } = require('./config');
 
 const deckRouter = require('./routes/decks');
 const userRouter = require('./routes/users');
+const authRouter = require('./routes/auth');
 
 // Create an Express application
 const app = express();
@@ -31,6 +32,7 @@ passport.use(jwtStrategy);
 
 app.use('/api/cards', deckRouter);
 app.use('/api/users', userRouter);
+app.use('/api/auth', authRouter);
 
 // Custom 404 Not Found route handler
 app.use((req, res, next) => {

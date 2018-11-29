@@ -1,12 +1,28 @@
 const { Strategy: LocalStrategy } = require('passport-local');
+const bcrypt = require('bcryptjs');
 const knex = require('../knex');
+
+const validatePassword = (password, user) => {
+	return new Promise((resolve, reject) =>
+		bcrypt.compare(password, user.password, (err, res) => {
+			if (err) {
+				reject(err);
+			} else if (res) {
+				resolve(res);
+			} else {
+				reject(new Error('Password incorrect'));
+			}
+		})
+	);
+};
 
 const localStrategy = new LocalStrategy((username, password, done) => {
 	let user;
 	knex('users')
 		.where({ username })
 		.then(results => {
-			user = results;
+			user = results[0];
+			// console.log(user);
 			if (!user) {
 				return Promise.reject({
 					reason: 'LoginError',
@@ -14,7 +30,7 @@ const localStrategy = new LocalStrategy((username, password, done) => {
 					location: 'username'
 				});
 			}
-			return user.validatePassword(password);
+			return validatePassword(password, user);
 		})
 		.then(isValid => {
 			if (!isValid) {
@@ -33,5 +49,4 @@ const localStrategy = new LocalStrategy((username, password, done) => {
 			return done(err);
 		});
 });
-
 module.exports = localStrategy;

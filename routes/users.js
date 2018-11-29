@@ -48,7 +48,7 @@ router.post('/', function(req, res, next) {
 	const tooMuchChar = Object.keys(minMaxChar).find(
 		field =>
 			'max' in minMaxChar[field] &&
-			req.body[field].trim().length > minMaxChar[field].min
+			req.body[field].trim().length > minMaxChar[field].max
 	);
 	if (notEnoughChar || tooMuchChar) {
 		return res.status(422).json({
@@ -56,8 +56,8 @@ router.post('/', function(req, res, next) {
 			reason: 'Validation Error',
 			message: notEnoughChar
 				? `Must be at least ${minMaxChar[notEnoughChar].min} characters long`
-				: `Must be less than ${minMaxChar[tooManyChar].max} characters long`,
-			location: notEnoughChar || tooManyChar
+				: `Must be less than ${minMaxChar[tooMuchChar].max} characters long`,
+			location: notEnoughChar || tooMuchChar
 		});
 	}
 
