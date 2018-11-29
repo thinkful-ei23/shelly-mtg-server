@@ -5,8 +5,8 @@ DROP TABLE IF EXISTS users;
 CREATE TABLE users
 (
 	id serial PRIMARY KEY,
-	username text NOT NULL
-	-- pass text NOT NULL
+	username text NOT NULL UNIQUE,
+	password text NOT NULL
 );
 
 CREATE TABLE decks
@@ -18,7 +18,7 @@ CREATE TABLE decks
 
 CREATE TABLE cards
 (
-	mtg_cards_id text NOT NULL,
+	mtg_cards text NOT NULL,
 	unique_url text NOT NULL,
 	decks_id INT NOT NULL REFERENCES decks
 );
