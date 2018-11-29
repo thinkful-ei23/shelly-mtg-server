@@ -3,17 +3,7 @@ const bcrypt = require('bcryptjs');
 const knex = require('../knex');
 
 const validatePassword = (password, user) => {
-	return new Promise((resolve, reject) =>
-		bcrypt.compare(password, user.password, (err, res) => {
-			if (err) {
-				reject(err);
-			} else if (res) {
-				resolve(res);
-			} else {
-				reject(new Error('Password incorrect'));
-			}
-		})
-	);
+	return bcrypt.compare(password, user.password);
 };
 
 const localStrategy = new LocalStrategy((username, password, done) => {
