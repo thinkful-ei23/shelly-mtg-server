@@ -15,9 +15,22 @@ router.get('/:uniqueUrl', function(req, res, next) {
 });
 
 router.get('/', function(req, res, next) {
-	knex('cards')
-		.select('mtg_cards', 'unique_url')
+	const userId = req.body.username;
+	// let user;
+	console.log('req.body', userId);
+	knex('users')
+		.where('username', userId)
+		// .select('users_id')
+		.then(result => {
+			console.log(result[0]);
+			return knex
+				.select('name')
+				.select('name')
+				.from('decks')
+				.where('users_id', result[0].id);
+		})
 		.then(results => {
+			console.log(results);
 			res.json(results);
 		})
 		.catch(err => next(err));
