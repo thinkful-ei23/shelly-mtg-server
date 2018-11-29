@@ -22,6 +22,7 @@ router.get('/', function(req, res, next) {
 		})
 		.catch(err => next(err));
 });
+
 router.post('/', function(req, res, next) {
 	console.log(req.body);
 	const { mtg_cards, unique_url } = req.body;
@@ -29,7 +30,7 @@ router.post('/', function(req, res, next) {
 	const newCard = {
 		mtg_cards,
 		unique_url,
-		decks_id: 1
+		decks_id: 2
 	};
 	// console.info(newCard);
 	if (newCard.mtg_cards === '[]') {
