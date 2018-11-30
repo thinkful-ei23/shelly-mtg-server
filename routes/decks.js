@@ -3,30 +3,29 @@ const knex = require('../knex');
 
 const router = express.Router();
 
-router.get('/:uniqueUrl', function(req, res, next) {
-	console.log('backend');
-	const unique_url = req.params.uniqueUrl;
-	knex
-		.first('mtg_cards')
-		.from('cards')
-		.where('unique_url', unique_url)
-		.then(result => res.json(result))
-		.catch(err => next(err));
-});
+// router.get('/:uniqueUrl', function(req, res, next) {
+// 	console.log('backend');
+// 	const unique_url = req.params.uniqueUrl;
+// 	knex
+// 		.first('mtg_cards')
+// 		.from('cards')
+// 		.where('unique_url', unique_url)
+// 		.then(result => res.json(result))
+// 		.catch(err => next(err));
+// });
 
-router.get('/decks', function(req, res, next) {
-	// console.log('req.body', req);
+router.get('/', function(req, res, next) {
+	console.log('deck request');
 	// const userId = req.body.username;
 	const userId = 'test-user-4';
+	// console.log(userId);
 	// let user;
 	knex('users')
 		.where('username', userId)
-		// .select('users_id')
 		.then(result => {
-			console.log(result[0]);
+			console.info(result);
 			return knex
-				.select('name')
-				.select('name')
+				.select('name', 'id')
 				.from('decks')
 				.where('users_id', result[0].id);
 		})
@@ -37,25 +36,18 @@ router.get('/decks', function(req, res, next) {
 		.catch(err => next(err));
 });
 
-router.get('/decks/cards', function(req, res, next) {
-	// console.log('req.body', req);
-	// const userId = req.body.username;
-	const { deckname } = req.body;
-	const name = deckname;
+router.get('/cards', function(req, res, next) {
+	// console.log('req.body', req.body);
+	const deckId = Math.floor(Math.random() * 4) + 1;
+	// const { deckname } = req.body;
+	// const name = deckname;
 	// let user;
-	knex('decks')
-		.where('name', name)
+	knex('cards')
+		.where('decks_id', deckId)
 		// .select('users_id')
 		.then(result => {
-			console.log(result[0]);
-			return knex
-				.select('mtg_cards')
-				.from('cards')
-				.where('decks_id', result[0].id);
-		})
-		.then(results => {
-			console.log(results);
-			res.json(results);
+			console.log(result);
+			res.json(result);
 		})
 		.catch(err => next(err));
 });

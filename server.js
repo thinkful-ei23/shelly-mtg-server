@@ -30,7 +30,7 @@ app.use(express.json());
 passport.use(localStrategy);
 passport.use(jwtStrategy);
 
-app.use('/api', deckRouter);
+app.use('/api/decks', deckRouter);
 app.use('/api/users', userRouter);
 app.use('/api/auth', authRouter);
 
