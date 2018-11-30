@@ -15,9 +15,10 @@ router.get('/:uniqueUrl', function(req, res, next) {
 });
 
 router.get('/', function(req, res, next) {
-	const userId = req.body.username;
+	// console.log('req.body', req);
+	// const userId = req.body.username;
+	const userId = 'test-user-4';
 	// let user;
-	console.log('req.body', userId);
 	knex('users')
 		.where('username', userId)
 		// .select('users_id')
