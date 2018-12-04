@@ -1,65 +1,48 @@
 const express = require('express');
 const knex = require('../knex');
+const passport = require('passport');
 
 const router = express.Router();
 
-// router.get('/:uniqueUrl', function(req, res, next) {
-// 	console.log('backend');
-// 	const unique_url = req.params.uniqueUrl;
-// 	knex
-// 		.first('mtg_cards')
-// 		.from('cards')
-// 		.where('unique_url', unique_url)
-// 		.then(result => res.json(result))
-// 		.catch(err => next(err));
-// });
+router.use(
+	'/',
+	passport.authenticate('jwt', { session: false, failWithError: true })
+);
 
 router.get('/', function(req, res, next) {
-	console.log('deck request');
-	// const userId = req.body.username;
-	const userId = 'test-user-4';
-	// console.log(userId);
-	// let user;
-	knex('users')
-		.where('username', userId)
-		.then(result => {
-			console.info(result);
-			return knex
-				.select('name', 'id')
-				.from('decks')
-				.where('users_id', result[0].id);
-		})
-		.then(results => {
-			console.log(results);
-			res.json(results);
-		})
-		.catch(err => next(err));
-});
-
-router.get('/cards', function(req, res, next) {
-	// console.log('req.body', req.body);
-	const deckId = Math.floor(Math.random() * 4) + 1;
-	// const { deckname } = req.body;
-	// const name = deckname;
-	// let user;
+	const userId = req.user.id;
+	// console.log('deck request', userId);
 	knex('cards')
-		.where('decks_id', deckId)
-		// .select('users_id')
+		.where('users_id', userId)
 		.then(result => {
-			console.log(result);
+			// console.info(result);
 			res.json(result);
 		})
 		.catch(err => next(err));
 });
 
+// router.get('/cards', function(req, res, next) {
+// 	console.log('req.body', req.user.id);
+// 	const { userId } = req.user.id;
+// 	// const name = deckname;
+// 	// let user;
+// 	knex('decks')
+// 		.where('users_id', userId)
+// 		// .select('users_id')
+// 		.then(result => {
+// 			console.log(result);
+// 			res.json(result);
+// 		})
+// 		.catch(err => next(err));
+// });
+
 router.post('/cards', function(req, res, next) {
 	console.log(req.body);
-	const { mtg_cards, unique_url } = req.body;
+	const { mtg_cards } = req.body;
 	// console.info(req.body);
 	const newCard = {
 		mtg_cards,
-		unique_url,
-		decks_id: 2
+		decks_name: 'super deck'
 	};
 	// console.info(newCard);
 	if (newCard.mtg_cards === '[]') {

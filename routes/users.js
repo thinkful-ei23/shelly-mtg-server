@@ -6,9 +6,9 @@ const router = express.Router();
 
 router.post('/', function(req, res, next) {
 	console.log('create user');
-	const { username, password } = req.body;
+	const { email, username, password } = req.body;
 	//include filtering bad usernames & passwords and trimming white space
-	const requiredFields = ['username', 'password'];
+	const requiredFields = ['email', 'username', 'password'];
 	const missingField = requiredFields.find(field => !(field in req.body));
 	if (missingField) {
 		const err = new Error(`Missing ${missingField}`);
@@ -16,7 +16,7 @@ router.post('/', function(req, res, next) {
 		return next(err);
 	}
 
-	const stringField = ['username', 'password'];
+	const stringField = ['email', 'username', 'password'];
 	const notStringField = stringField.find(
 		field => field in req.body && typeof req.body[field] !== 'string'
 	);
@@ -26,7 +26,7 @@ router.post('/', function(req, res, next) {
 		return next(err);
 	}
 
-	const trimmedField = ['username', 'password'];
+	const trimmedField = ['email', 'username', 'password'];
 	const notTrimmedField = trimmedField.find(
 		field => req.body[field].trim() !== req.body[field]
 	);
@@ -66,6 +66,7 @@ router.post('/', function(req, res, next) {
 		.then(digest => {
 			// console.log(digest);
 			const newAcct = {
+				email,
 				username,
 				password: digest
 			};
